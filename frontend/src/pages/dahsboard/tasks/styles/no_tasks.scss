@@ -1,0 +1,19 @@
+@import "../../../../base/styles/mixins/buttons";
+
+.no-tasks-container {
+  border: 1px white solid;
+  border-radius: 3%;
+  padding: 10%;
+  background: #f9fffd;
+  opacity: 0.8;
+  margin-top: 10%;
+}
+
+#notasks-fix-this {
+  margin-top: 3%;
+}
+
+.no-tasks-create-btn{
+  margin-top: 3%;
+  @include button_base;
+}

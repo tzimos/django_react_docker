@@ -9,15 +9,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
+import {connect} from "react-redux";
+import {LocalStorage} from "storage-manager/src";
 
 import apiUrls from "../../../base/api_urls";
 import validateEmail from '../../../base/utils/email_validation';
+import getAuthHeader from "../../../base/utils/authorisation_token";
+
+import FormFieldInput from "../../../shared/components/Fields";
 
 import '../styles/contact_us.scss'
-import {LocalStorage} from "storage-manager/src";
-import getAuthHeader from "../../../base/utils/authorisation_token";
-import {connect} from "react-redux";
-import FormFieldInput from "../../../shared/components/Fields";
 
 class ContactUsConnected extends Component {
     constructor(props) {

@@ -58,7 +58,7 @@ class TasksBaseConnected extends Component {
      */
     handleRefresh = (task) => {
         let index;
-        let taskData = this.props.taskData;
+        let taskData = this.props.taskData.slice();
 
         taskData.filter(
             (obj) => {
@@ -74,7 +74,10 @@ class TasksBaseConnected extends Component {
 
     handleDelete = (task_id) => {
         let index;
-        let taskData = this.props.taskData;
+        // We have to manipulate the copy of the original
+        // array otherwise we have problems with the asynchronous
+        // nature of the props.
+        let taskData = this.props.taskData.slice();
 
         taskData.filter(
             (obj) => {

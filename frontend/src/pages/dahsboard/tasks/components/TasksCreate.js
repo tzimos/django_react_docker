@@ -16,7 +16,6 @@ import apiUrls from "../../../../base/api_urls";
 import getAuthHeader from "../../../../base/utils/authorisation_token";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {extraNavbarContext} from "../../../../navbar/redux/actions/extra_navbar_context";
 import {setTasksData} from "../redux/actions/setTaskDataFromApi";
 
 class TasksCreateConnected extends Component {
@@ -36,7 +35,6 @@ class TasksCreateConnected extends Component {
     handleSubmit = () => {
         const token = LocalStorage.get('token');
         const url = apiUrls.create_task;
-        console.log(this.state)
         axios({
             method: 'post',
             url,

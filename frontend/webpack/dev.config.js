@@ -11,7 +11,7 @@ const baseConfig = require('./base.config.js');
 const dotEnv = require('dotenv-webpack');
 
 const dot_env = new dotEnv({
-		path: path.resolve(__dirname, '../env/.env.dev'),
+		path: path.resolve(__dirname, '../env/.env.docker_dev'),
 
 		safe: true,
 });
