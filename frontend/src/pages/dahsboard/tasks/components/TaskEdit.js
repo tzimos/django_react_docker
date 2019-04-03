@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import '../styles/task_edit.scss'
+
 class TaskEdit extends Component {
 
     constructor(props) {
@@ -10,7 +12,8 @@ class TaskEdit extends Component {
             title: this.props.title,
             is_public: this.props.is_public,
             due_date: this.props.due_date,
-            details: this.props.details
+            details: this.props.details,
+            details_limit: 255
         };
         this.handleChange = this.handleChange.bind(this);
     }
@@ -23,6 +26,10 @@ class TaskEdit extends Component {
             new_val = !e.target.checked;
             this.setState({is_public: !this.state.is_public})
         }
+        if (name === 'details' && new_val.length > this.state.details_limit) {
+            return;
+        }
+
         this.setState(
             {[name]: new_val},
             () => this.props.handleChange(this.state)
@@ -57,24 +64,27 @@ class TaskEdit extends Component {
                                 </div>
                             </li>
 
-                                <li className="list-group-item">
-                                    <div className="row">
-                                        <div className="col"><b>Is private:</b></div>
-                                        <div className="col">
-                                            <input name='is_public' checked={!this.state.is_public} type="checkbox"
-                                                   onChange={this.handleChange}/>
-                                        </div>
+                            <li className="list-group-item">
+                                <div className="row">
+                                    <div className="col"><b>Is private:</b></div>
+                                    <div className="col">
+                                        <input name='is_public' checked={!this.state.is_public} type="checkbox"
+                                               onChange={this.handleChange}/>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
                         </ul>
                         <div className="list-group-item">
                             <textarea
+                                className='textarea-taskedit'
                                 name="details"
                                 value={this.state.details}
                                 onChange={this.handleChange}
-                                cols={40}
-                                rows={10}
+                                rows={3}
                             />
+                            <div className="float-right">
+                                {this.state.details.length}/{this.state.details_limit}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2,13 +2,16 @@
   & .card-header {
     background-color: #817470;
   }
+
   & .card-header {
     color: white;
   }
+
   margin-bottom: 3%;
 }
-.card-is-private{
-  float:right
+
+.card-is-private {
+  float: right
 }
 
 
@@ -26,7 +29,24 @@
   margin-left: 3%;
 }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
+.col-centered {
+  float: none;
+  margin: 0 auto;
+}
+
+.task-details-label {
+  margin-bottom: 3%;
+}
+
+.task-details {
+  height: 4em;
+  overflow-y: scroll;
+  width: 100%;
+  display: block;
+  box-sizing: content-box;
+}
+
+
+.task-details::-webkit-scrollbar {
+  display: none;
 }

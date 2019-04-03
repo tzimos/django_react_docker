@@ -91,7 +91,7 @@ class TasksBaseConnected extends Component {
     render = () => {
         return (
             <>
-                <div className="row taskbase-container">
+                <div className="row justify-content-center taskbase-container">
                     {this.props.taskData.map(
                         task =>
                             <Task

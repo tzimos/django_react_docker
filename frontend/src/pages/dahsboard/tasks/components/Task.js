@@ -92,7 +92,7 @@ class TaskConnected extends Component {
     };
 
     showDeleteBtn = () => {
-        return LocalStorage.get('email')===this.props.author
+        return LocalStorage.get('email') === this.props.author
     };
 
     /**
@@ -114,7 +114,7 @@ class TaskConnected extends Component {
 
     render = () => {
         return (
-            <div className="col-3">
+            <div className="col-xs-12 col-sm-12  col-md-10 col-lg-7 col-xl-3">
                 <div className="col-12 container-fluid">
                     {this.renderModal()}
 
@@ -176,15 +176,18 @@ class TaskConnected extends Component {
                             </li>
 
                         </ul>
-                        <div className="list-group-item">
-                            <p className="card-text">{this.props.details}</p>
+                        <div className="list-group-item task-details-container">
+                            <div className="row">
+                                <div className="col-12 task-details-label"><b>Details:</b></div>
+                                <p className="col card-text task-details">{this.props.details}</p>
+                            </div>
                         </div>
                         <div className="card-body">
                             <div className="row col-centered">
                                 <div onClick={this.handleEditing} className="col-centered">
                                     <a className="btn btn-lg">Edit</a>
                                 </div>
-                                { this.showDeleteBtn
+                                {this.showDeleteBtn
                                     ?
                                     <div onClick={this.handleDelete} className="col-centered">
                                         <a className="btn btn-lg">Delete</a>
