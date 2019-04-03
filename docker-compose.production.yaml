@@ -21,7 +21,7 @@ services:
       - ./backend:/backend
       - ./logs/gunicorn_logs:/var/log/gunicorn
     expose:
-      - 8000
+      - 8001
     environment:
       - DJANGO_SETTINGS_MODULE:backend.settings.docker
       - DEBUG=0

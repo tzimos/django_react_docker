@@ -34,26 +34,6 @@ module.exports = merge(baseConfig, {
 				path: path.resolve(__dirname, '../build'),
 				filename: '[name].bundle.[chunkhash].js',
 		},
-
-		module: {
-				rules: [
-						{
-								test: /\.css$/,
-								use: ExtractTextPlugin.extract({
-										use: [
-												'css-loader',
-										],
-								}),
-						},
-						{
-								test: /\.css$/,
-								use: [
-										'style-loader',
-										'css-loader?importLoaders=1',
-								],
-						},
-				],
-		},
 		plugins: [
 				extraText,
 				loader_options,
