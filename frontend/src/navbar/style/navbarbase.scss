@@ -1,0 +1,25 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  background: rgba(69,69,69,1);
+}
+
+.navbar {
+  & .navbar-brand:hover {
+    color: #817470;
+  }
+  & a {
+    font-size: 1.2em;
+    color: white;
+  }
+
+  & .nav-link:hover {
+    color: #817470;
+  }
+
+}

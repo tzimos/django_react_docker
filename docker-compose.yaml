@@ -1,0 +1,58 @@
+# This is the base docker-compose file
+# It defines the services that are going
+# to run. It will be overriden by other
+# docker-compose files according the environment
+# they will refer to.
+
+version: '3'
+
+services:
+
+  django_react_db:
+    container_name: 'django_react_db'
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: '{uS7M:Wg=(c@UuEg'
+    expose:
+      - 5432
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    restart: on-failure
+
+  django_react_backend:
+    container_name: 'django_react_backend'
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    command:
+      bash -c "
+      python manage.py collectstatic --no-input &&
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - ./backend:/backend
+    environment:
+      - DJANGO_SETTINGS_MODULE:backend.settings.docker
+      - DEBUG=1
+    depends_on:
+      - django_react_db
+      - django_react_frontend
+    links:
+      - django_react_db:database
+      - django_react_frontend:frontend
+    restart: on-failure
+
+  django_react_frontend:
+    container_name: 'django_react_frontend'
+    build: ./frontend/
+    command: bash -c "npm run dev"
+    env_file:
+      - ./frontend/env/.env.docker_dev
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+    restart: on-failure
+
+volumes:
+  database:

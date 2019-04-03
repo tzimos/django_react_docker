@@ -1,0 +1,8 @@
+*.pyc
+frontend/node_modules/
+frontend/build/
+frontend/dist/
+.idea/
+static_collection/
+logs/
+database/

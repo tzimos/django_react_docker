@@ -1,0 +1,11 @@
+@import "../../../base/styles/mixins/buttons";
+
+.buttons-container {
+  margin-top: 30%;
+}
+
+
+.button {
+  @include button_base
+}
+

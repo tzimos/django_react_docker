@@ -1,0 +1,24 @@
+@import "../../../base/styles/mixins/buttons";
+
+.contact-us-form-container {
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+.form-inner {
+  border: 1px white solid;
+  border-radius: 3%;
+  padding: 10%;
+  background: #f9fffd;
+  opacity: 0.8;
+}
+
+
+.contact-us-submit-btn {
+  @include button_base;
+}
+
+.contact-us-buttons {
+  margin-top: 10%;
+  margin-left: 30%;
+}

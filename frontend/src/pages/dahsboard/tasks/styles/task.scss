@@ -1,0 +1,32 @@
+.task-card {
+  & .card-header {
+    background-color: #817470;
+  }
+  & .card-header {
+    color: white;
+  }
+  margin-bottom: 3%;
+}
+.card-is-private{
+  float:right
+}
+
+
+.btn {
+  background-color: #817470;
+  color: white !important;
+
+  &:hover {
+    background-color: #5c5c5c;
+    color: white;
+  }
+}
+
+.task-buttons {
+  margin-left: 3%;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}

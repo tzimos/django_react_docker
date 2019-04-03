@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  django_react_backend:
+    container_name: 'django_react_backend'
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
+    command:
+      bash -c "
+      python manage.py collectstatic --no-input &&
+      python manage.py makemigrations &&
+      python manage.py migrate &&
+      python manage.py create_admin_user &&
+      gunicorn backend.wsgi
+      -b 0.0.0.0:8001
+      --workers=4
+      --access-logfile /var/log/gunicorn/access.log
+      --error-logfile /var/log/gunicorn/error.log"
+    volumes:
+      - ./backend:/backend
+      - ./logs/gunicorn_logs:/var/log/gunicorn
+    expose:
+      - 8000
+    environment:
+      - DJANGO_SETTINGS_MODULE:backend.settings.docker
+      - DEBUG=0
+    depends_on:
+      - django_react_db
+      - django_react_frontend
+    links:
+      - django_react_db:database
+      - django_react_frontend:frontend
+    restart: on-failure
+
+  django_react_frontend:
+    container_name: 'django_react_frontend'
+    build: ./frontend/
+    command: bash -c "npm run build && npm run serve"
+    env_file:
+      - ./frontend/env/.env.docker_prod
+    expose:
+      - 8080
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+
+  # The nginx container is depended on and linked to
+  # both backend and frontend.
+  django_react_webserver:
+    container_name: 'django_react_nginx'
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+      - ./config/nginx:/etc/nginx/conf.d/default.conf
+      - ./backend/static_collection:/static/
+      - ./logs/nginx_logs/:/var/log/nginx/
+    depends_on:
+      - django_react_backend
+      - django_react_frontend
+    links:
+      - django_react_backend:backend
+      - django_react_frontend:frontend
+    restart: on-failure
+
+# We can hold a level of persistency on the local filesystem
+# of the following log directories.
+volumes:
+  database:
+  nginx_logs:
+  gunicorn_logs:
