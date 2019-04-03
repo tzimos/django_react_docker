@@ -122,8 +122,8 @@ class ContactUsConnected extends Component {
      * @return {Array}
      */
     fields = () => {
-        const field_names = ['email'];
-        const result = [];
+        let field_names = ['email'],
+            result = [];
 
         field_names.map(field => result.push(
             <FormFieldInput key={field}
@@ -149,19 +149,20 @@ class ContactUsConnected extends Component {
 
                     <form className='form-inner'>
                         {this.fields()}
-                        <div className='row'>
-                            <div className='col-3 login-form-fields'>
+                        <div className='row contac-us-message-container'>
+                            <div className='col-3'>
                                 <label htmlFor='text'>Message: </label>
                             </div>
-                            <textarea
-                                value={this.state.message}
-                                onChange={this.handleMessageChange}
-                                cols={40}
-                                rows={10}
+                            <div className="col-9">
+                            <textarea className="contact-us-textarea"
+                                      value={this.state.message}
+                                      onChange={this.handleMessageChange}
                             />
-
+                            </div>
                         </div>
-                        {this.state.message_current_length}/{this.state.message_max_length}
+                        <div className="float-right">
+                            {this.state.message_current_length}/{this.state.message_max_length}
+                        </div>
                         <div className='contact-us-buttons'>
                             <div className='contact-us-submit-btn'>
                                 <a onClick={this.handleSubmit}>Submit</a>
