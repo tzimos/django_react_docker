@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import DateTimePicker from 'react-datetime-picker';
 
 import '../styles/task_edit.scss'
 
@@ -16,12 +17,21 @@ class TaskEdit extends Component {
             details_limit: 255
         };
         this.handleChange = this.handleChange.bind(this);
+        this.onDateChange = this.onDateChange.bind(this);
     }
+
+
+    onDateChange = (date) => {
+
+        this.setState(
+            {due_date: date},
+            () => this.props.handleChange(this.state)
+            )
+    };
 
     handleChange = (e) => {
         const name = e.target.name;
         let new_val = name === 'is_public' ? !e.target.checked : e.target.value;
-
         if (name === 'is_public') {
             new_val = !e.target.checked;
             this.setState({is_public: !this.state.is_public})
@@ -59,8 +69,11 @@ class TaskEdit extends Component {
                             <li className="list-group-item">
                                 <div className="row">
                                     <div className="col"><b>Due date:</b></div>
-                                    <input name="due_date" onChange={this.handleChange} type='text'
-                                           value={this.state.due_date} className="col"/>
+                                    <DateTimePicker
+                                        onChange={this.onDateChange}
+                                        value={new Date(this.state.due_date)}
+                                        disableClock={true}
+                                    />
                                 </div>
                             </li>
 

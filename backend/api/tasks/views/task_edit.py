@@ -26,7 +26,7 @@ class TaskEdit(APIView):
 	def post(self, request, *args, **kwargs):
 		data = request.data
 
-		data['due_date'] = datetime.strptime(data.get('due_date'), '%Y-%m-%d').date()
+		data['due_date'] = datetime.strptime(data.get('due_date')[:10], '%Y-%m-%d').date()
 
 		user = request.user
 		try:
