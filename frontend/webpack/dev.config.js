@@ -23,18 +23,6 @@ module.exports = merge(baseConfig, {
 				port: 8000,
 				historyApiFallback: true
 		},
-
-		module: {
-				rules: [
-						{
-								test: /\.css$/,
-								use: [
-										'style-loader',
-										'css-loader?importLoaders=1',
-								],
-						},
-				],
-		},
 		plugins: [
 				dot_env,
 		]
