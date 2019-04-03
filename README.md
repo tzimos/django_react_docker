@@ -10,7 +10,7 @@ There is one superuser created with the following credentials:
 
         email: admin@admin.com
         password: Adminr00t
-That's it. Now you can navigate and whatever you want in the app, or at 
+That's it. Now you can navigate and do whatever you want in the app, or at 
 the django admin site.
 
 # Development mode:
