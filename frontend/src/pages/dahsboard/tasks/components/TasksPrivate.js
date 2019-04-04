@@ -16,9 +16,19 @@ import getAuthHeader from '../../../../base/utils/authorisation_token';
 import {setTasksData} from '../redux/actions/setTaskDataFromApi';
 import TasksBase from './TasksBase';
 import NoTasks from "./NoTasks";
+import Loader from "../../../../shared/components/Loader";
 
 
 class TasksPrivateConnected extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            'loading': true,
+        };
+        this.tasksRenderer = this.tasksRenderer.bind(this);
+        this.renderLoading = this.renderLoading.bind(this);
+    }
 
     /**
      * This method is used to populate the tasks.
@@ -37,15 +47,59 @@ class TasksPrivateConnected extends Component {
             .then((response) => {
                 this.props.setTasksData(response.data);
             })
-            .catch(error => (<div>error: {error.response.data}</div>));
+            .catch(error => (<div>error: {error.response.data}</div>))
+            .then(() => {
+                setTimeout(() => {
+                    this.setState({loading: false})
+                }, 500)
+            });
+    };
+
+    /**
+     * Method that returns conditionally
+     * the Loader Component
+     *
+     * @return {jsx}
+     */
+    renderLoading = () => {
+        if (this.state.loading) {
+
+            return (<Loader/>)
+        }
+    };
+
+    /**
+     * Method that returns conditionally
+     * the TaskBase or th NoTasks Component.
+     * If one of them or none of them is
+     * rendered is a factor of loading
+     * and if the taskData Array has
+     * any elements.
+     *
+     * @return {Array}
+     */
+    tasksRenderer = () => {
+        let result = [];
+
+        if (!this.state.loading) {
+
+            this.props.taskData.length === 0
+                ? result = <NoTasks
+                    mode={'tasksPrivate'}
+                />
+                :
+                result = <TasksBase
+                    tasks={this.props.taskData}
+                />
+        }
+        return result;
     };
 
     render = () => {
         return (
-            <div>{
-                this.props.taskData.length !== 0
-                    ? <TasksBase tasks={this.props.taskData}/>
-                    : <NoTasks mode={'tasksPrivate'}/>}
+            <div>
+                {this.renderLoading()}
+                {this.tasksRenderer()}
             </div>
         );
     };

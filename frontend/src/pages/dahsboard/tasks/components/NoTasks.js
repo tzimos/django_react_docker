@@ -2,7 +2,7 @@
  * @file frontend.src.pages.dahsboard.tasks.components.NoTasks.js
  * @author Panagiotis Tzimos.
  *
- * When there are no Tasks this components should appear.
+ * When there are no Tasks this component should appear.
  */
 
 
@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 import {extraNavbarContext} from "../../../../navbar/redux/actions/extra_navbar_context";
 
 import '../styles/no_tasks.scss'
-import Link from "react-router-dom/es/Link";
 
 class NoTasksConnected extends Component {
 
@@ -43,11 +42,15 @@ class NoTasksConnected extends Component {
         this.props.extraNavbarContext(extra_navbar_context);
     };
 
+    /**
+     * This method is used to render the appropriate
+     * message to the user.
+     *
+     * @return {jsx}
+     */
     message = () => {
-        let msg = [];
-
         if (this.props.mode === 'tasksAll') {
-            msg.push(
+            return (
                 <div>
                     <div className='row justify-content-center align-items-center'>
                         <h1> Oops... nothing to do...</h1>
@@ -57,21 +60,18 @@ class NoTasksConnected extends Component {
                     </div>
                 </div>
             )
-
-        } else {
-            msg.push(
-                <div>
-                    <div className='row justify-content-center align-items-center'>
-                        <h4>We are sure that you have something to do,<br/> but you don't want anyone to know</h4>
-                    </div>
-                    <div id='notasks-fix-this' className='row justify-content-center align-items-center'>
-                        <h6>Only a click away</h6>
-                    </div>
-                </div>
-            )
         }
 
-        return msg;
+        return (
+            <div>
+                <div className='row justify-content-center align-items-center'>
+                    <h4>We are sure that you have something to do,<br/> but you don't want anyone to know</h4>
+                </div>
+                <div id='notasks-fix-this' className='row justify-content-center align-items-center'>
+                    <h6>Only a click away</h6>
+                </div>
+            </div>
+        )
     };
 
     render = () => {

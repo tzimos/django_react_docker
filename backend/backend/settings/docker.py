@@ -33,6 +33,13 @@ if DEBUG:
 		MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 		INTERNAL_IPS = ['127.0.0.1', ]
 
+if not DEBUG:
+	REST_FRAMEWORK = {
+		'DEFAULT_RENDERER_CLASSES': (
+			'rest_framework.renderers.JSONRenderer',
+		)
+	}
+
 CORS_ORIGIN_WHITELIST = (
 	'localhost:8080',
 	'localhost:8000',

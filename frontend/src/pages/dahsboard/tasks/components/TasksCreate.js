@@ -6,17 +6,19 @@
  */
 
 import React, {Component} from 'react';
-
-
-import '../styles/task_create.scss'
 import {LocalStorage} from "storage-manager/src";
 import axios from "axios";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import _ from 'lodash';
 
 import apiUrls from "../../../../base/api_urls";
 import getAuthHeader from "../../../../base/utils/authorisation_token";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
 import {setTasksData} from "../redux/actions/setTaskDataFromApi";
+import Loader from '../../../../shared/components/Loader';
+
+import '../styles/task_create.scss'
+
 
 class TasksCreateConnected extends Component {
 
@@ -26,42 +28,42 @@ class TasksCreateConnected extends Component {
             title: '',
             due_date: '',
             details: '',
-            'is_public': false
+            is_public: false,
+            loading: true
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.renderLoading = this.renderLoading.bind(this);
+        this.renderForm = this.renderForm.bind(this);
     }
 
-    handleSubmit = () => {
-        const token = LocalStorage.get('token');
-        const url = apiUrls.create_task;
-        axios({
-            method: 'post',
-            url,
-            headers: getAuthHeader(token),
-            data: this.state
-        })
-            .then((response) => {
-                this.props.history.push('/dashboard/tasks/all')
-            })
-            .catch(error => (<div>error: {error.response.data}</div>));
+    componentWillMount = () => {
+        setTimeout(() => {
+                this.setState({loading: false})
+            }, 500
+        )
     };
 
+    /**
+     * Method that returns conditionally
+     * the Loader Component
+     *
+     * @return {jsx}
+     */
+    renderLoading = () => {
+        if (this.state.loading) {
 
-    handleChange = (e) => {
-        const name = e.target.name;
-        let new_val = e.target.value;
-
-        if (name === 'is_public') {
-            this.setState({is_public:!this.state.is_public})
-        } else {
-            this.setState(
-                {[name]: new_val}
-            );
+            return (<Loader/>)
         }
     };
 
-    render = () => {
+    /**
+     * This method is used to render
+     * the Task creation form.
+     *
+     * @return {jsx}
+     */
+    renderForm = () => {
         return (
             <div className={'task-creation-container'}>
                 <div className="col-12 ">
@@ -129,11 +131,54 @@ class TasksCreateConnected extends Component {
             </div>
         )
     };
+
+    handleSubmit = () => {
+        const token = LocalStorage.get('token');
+        const url = apiUrls.create_task;
+        let fields = _.clone(this.state);
+
+        delete fields.loading;
+
+        axios({
+            method: 'post',
+            url,
+            headers: getAuthHeader(token),
+            data: fields
+        })
+            .then((response) => {
+                this.props.history.push('/dashboard/tasks/all')
+            })
+            .catch(error => (<div>error: {error.response.data}</div>));
+    };
+
+
+    handleChange = (e) => {
+        const name = e.target.name;
+        let new_val = e.target.value;
+
+        if (name === 'is_public') {
+            this.setState({is_public: !this.state.is_public})
+        } else {
+            this.setState(
+                {[name]: new_val}
+            );
+        }
+    };
+
+    render = () => {
+        return (
+            <div>
+                {!this.state.loading
+                    ? this.renderForm()
+                    : this.renderLoading()}</div>
+        )
+    };
 }
 
 
 TasksCreateConnected.propTypes = {
-    setTasksData: PropTypes.func
+    setTasksData: PropTypes.func,
+    history: PropTypes.array
 };
 
 const mapDispatchToProps = dispatch => ({

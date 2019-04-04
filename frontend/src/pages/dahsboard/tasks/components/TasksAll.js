@@ -11,6 +11,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import Loader from '../../../../shared/components/Loader';
 
 import apiUrls from '../../../../base/api_urls';
 import getAuthHeader from '../../../../base/utils/authorisation_token';
@@ -18,8 +19,16 @@ import {setTasksData} from '../redux/actions/setTaskDataFromApi';
 import TasksBase from './TasksBase';
 import NoTasks from "./NoTasks";
 
-
 class TasksAllConnected extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            'loading': true,
+        };
+        this.tasksRenderer = this.tasksRenderer.bind(this);
+        this.renderLoading = this.renderLoading.bind(this);
+    }
 
     /**
      * This method is used to populate the tasks.
@@ -40,23 +49,61 @@ class TasksAllConnected extends Component {
                 this.props.setTasksData(response.data);
 
             })
-            .catch(error => <div>error: {error.response.data}</div>);
+            .catch(error => <div>error: {error.response}</div>)
+            .then(() => {
+                setTimeout(() => {
+                    this.setState({loading: false})
+                }, 500)
+            });
     };
 
+    /**
+     * Method that returns conditionally
+     * the Loader Component
+     *
+     * @return {jsx}
+     */
+    renderLoading = () => {
+        if (this.state.loading) {
+
+            return (<Loader/>)
+        }
+    };
+
+    /**
+     * Method that returns conditionally
+     * the TaskBase or th NoTasks Component.
+     * If one of them or none of them is
+     * rendered is a factor of loading
+     * and if the taskData Array has
+     * any elements.
+     *
+     * @return {Array}
+     */
+    tasksRenderer = () => {
+        let result = [];
+
+        if (!this.state.loading) {
+
+            this.props.taskData.length === 0
+                ? result = <NoTasks
+                    mode={'tasksAll'}
+                />
+                :
+                result = <TasksBase
+                    tasks={this.props.taskData}
+                />
+        }
+        return result;
+    };
 
     render = () => {
         return (
-            <div>{
-                this.props.taskData.length !== 0
-                    ?
-                    <TasksBase
-                        tasks={this.props.taskData}
-                    />
-                    :
-                    <NoTasks
-                        mode={'tasksAll'}
-                    />}
-            </div>);
+            <div>
+                {this.renderLoading()}
+                {this.tasksRenderer()}
+            </div>
+        );
     };
 
 }

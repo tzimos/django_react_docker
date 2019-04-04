@@ -72,6 +72,15 @@ class TasksBaseConnected extends Component {
         this.forceUpdate()
     };
 
+    /**
+     * This method handles the delete action of
+     * a task.
+     * It is just refreshes the state of taskData.
+     * The delete action has already happened in
+     * the child component.
+     *
+     * @param {number} task_id
+     */
     handleDelete = (task_id) => {
         let index;
         // We have to manipulate the copy of the original
