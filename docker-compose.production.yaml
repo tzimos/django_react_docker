@@ -37,8 +37,9 @@ services:
     container_name: 'django_react_frontend'
     build: ./frontend/
     command: bash -c "npm run build && npm run serve"
-    env_file:
-      - ./frontend/env/.env.docker_prod
+    environment:
+      - DEBUG=false
+      - API_HOST
     expose:
       - 8080
     volumes:

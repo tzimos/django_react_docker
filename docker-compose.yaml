@@ -47,8 +47,6 @@ services:
     container_name: 'django_react_frontend'
     build: ./frontend/
     command: bash -c "npm run dev"
-    env_file:
-      - ./frontend/env/.env.docker_dev
     volumes:
       - ./frontend:/frontend
       - /frontend/node_modules

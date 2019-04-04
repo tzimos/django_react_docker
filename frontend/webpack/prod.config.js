@@ -10,8 +10,6 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
 const baseConfig = require('./base.config.js');
-const dotEnv = require('dotenv-webpack');
-
 
 // Extract imported CSS into own file
 const extraText = new ExtractTextPlugin('[name].bundle.[chunkhash].css');
@@ -22,11 +20,7 @@ const loader_options = new webpack.LoaderOptionsPlugin({
 });
 
 
-const dot_env = new dotEnv({
-		path: path.resolve(__dirname, '../env/.env.docker_prod'),
-		safe: true,
-
-});
+const env_vars = new webpack.EnvironmentPlugin(['API_HOST', 'DEBUG']);
 
 
 module.exports = merge(baseConfig, {
@@ -37,6 +31,6 @@ module.exports = merge(baseConfig, {
 		plugins: [
 				extraText,
 				loader_options,
-				dot_env
+				env_vars
 		],
 });
