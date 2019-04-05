@@ -5,7 +5,7 @@
 # Quick start
 Just run:
         
-        sudo make prod
+        sudo make staging
 There is one superuser created with the following credentials:
 
         email: admin@admin.com
@@ -38,7 +38,7 @@ the following command at the root of the project:
 
 Now in the production side you have to insert at the root of the repo:
 
-        sudo make prod
+        sudo make staging
 
 Now the project is accessible at http://localhost:8000
 
@@ -51,7 +51,12 @@ the requests that are done by the browser as appropriate.
 In order to kill all running containers and bring the project down please enter
 the following command at the root of the project:
 
-        sudo make kill_prod
+        sudo make kill_staging
+        
+# Production mode:
+
+Don't try this yet. It's under construction.
+
 # Basic Structure
 
 * ###  Backend

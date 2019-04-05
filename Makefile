@@ -11,7 +11,7 @@ kill_dev:
 kill_prod:
 	docker-compose -f docker-compose.yaml -f docker-compose.production.yaml down
 
-kill_prod:
+kill_staging:
 	docker-compose -f docker-compose.yaml -f docker-compose.staging.yaml down
 
 clean:
