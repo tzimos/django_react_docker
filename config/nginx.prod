@@ -1,0 +1,44 @@
+upstream frontend {
+  server frontend:8080;
+}
+
+upstream backend {
+  server backend:8001;
+}
+
+server {
+    set_by_lua $HOST_NAME 'return os.getenv("DOMAIN_NAME")';
+
+    listen 8000;
+    server_name $HOST_NAME;
+
+    charset     utf-8;
+
+    proxy_redirect off;
+
+    access_log /var/log/nginx/reverse-access.log;
+    error_log /var/log/nginx/reverse-error.log;
+
+    # This proxies every request to the react-app
+    location / {
+      proxy_pass http://frontend/;
+    }
+
+    location ^~ /backend/ {
+      proxy_pass http://backend/backend/;
+    }
+
+    # Redirect and rewrite the admin url in order
+    # to be able to reach the /backend/admin/ url
+    # at the backend service
+    location ^~ /admin/ {
+        rewrite ^/admin/(.*)$ /backend/admin/$1;
+    }
+
+    # The static directory is copied inside the
+    # nginx container. This is used only for django
+    # static assets that are needed in django-admin
+    location ^~ /static/ {
+        alias /static/;
+    }
+}
