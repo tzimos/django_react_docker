@@ -39,7 +39,7 @@ services:
     command: bash -c "npm run build && npm run serve"
     environment:
       - DEBUG=false
-      - API_HOST
+      - API_HOST=http://localhost:8000/backend
     expose:
       - 8080
     volumes:

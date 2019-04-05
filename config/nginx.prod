@@ -8,13 +8,13 @@ upstream backend {
 
 server {
     #set_by_lua $DOMAIN_NAME 'return os.getenv("DOMAIN_NAME")';
+    server_names_hash_bucket_size 64;
 
     listen 8000;
     server_name *.greek-dev-in-uk.co.uk;
     return 301 http://$server_name$request_uri;
 
     charset     utf-8;
-
     proxy_redirect off;
 
     access_log /var/log/nginx/reverse-access.log;
