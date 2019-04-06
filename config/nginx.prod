@@ -11,7 +11,6 @@ server {
     server_names_hash_bucket_size 64;
 
     listen 8000;
-    server_name greek-dev-in-uk.co.uk;
 
     charset     utf-8;
     proxy_redirect off;
