@@ -19,7 +19,7 @@ services:
       --error-logfile /var/log/gunicorn/error.log"
     volumes:
       - ./backend:/backend
-      - ./logs/django_logs:/backend/log/debug_django.log
+      - ./logs/django_logs:/backend/log/
       - ./logs/gunicorn_logs:/var/log/gunicorn
     expose:
       - 8001
