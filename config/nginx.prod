@@ -15,8 +15,6 @@ server {
     charset     utf-8;
     proxy_redirect off;
 
-    access_log /var/log/nginx/reverse-access.log;
-    error_log /var/log/nginx/reverse-error.log;
 
     # This proxies every request to the react-app
     location / {
