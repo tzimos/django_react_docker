@@ -52,8 +52,6 @@ services:
   django_react_webserver:
     container_name: 'django_react_nginx'
     image: nginx:latest
-    ports:
-      - "8000:8000"
     volumes:
       - ./backend:/backend
       - ./config/nginx.prod:/etc/nginx/conf.d/default.conf
