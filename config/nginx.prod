@@ -10,7 +10,7 @@ server {
     #set_by_lua $DOMAIN_NAME 'return os.getenv("DOMAIN_NAME")';
 
     listen 80;
-    server_name greek-dev-in-uk.co.uk;
+    server_name ptzimserver.eu;
 
     charset     utf-8;
     proxy_redirect off;
