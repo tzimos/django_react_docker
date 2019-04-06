@@ -6,3 +6,4 @@ frontend/dist/
 static_collection/
 logs/
 database/
+backend/log/
