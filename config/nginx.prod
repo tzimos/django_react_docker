@@ -12,7 +12,6 @@ server {
 
     listen 8000;
     server_name *.greek-dev-in-uk.co.uk;
-    return 301 http://$server_name$request_uri;
 
     charset     utf-8;
     proxy_redirect off;
