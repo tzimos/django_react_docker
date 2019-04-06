@@ -10,7 +10,6 @@ server {
     #set_by_lua $DOMAIN_NAME 'return os.getenv("DOMAIN_NAME")';
 
     listen 8000;
-    listen [::]8000;
     server_name greek-dev-in-uk.co.uk;
 
     charset     utf-8;
