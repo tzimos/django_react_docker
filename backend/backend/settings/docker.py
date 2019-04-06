@@ -9,7 +9,7 @@ from backend.settings.base import *
 
 domain_name = os.environ.get('DOMAIN_NAME', 'localhost')
 
-ALLOWED_HOSTS += [domain_name, 'backend']
+ALLOWED_HOSTS += ['www.'+domain_name, 'backend']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -45,3 +45,22 @@ CORS_ORIGIN_WHITELIST = (
     domain_name + ':8080',
     domain_name + ':8000',
 )
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'log/debug_django.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
